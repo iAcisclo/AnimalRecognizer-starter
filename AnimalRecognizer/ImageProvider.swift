@@ -11,7 +11,6 @@ import Combine
 
 class ImageProvider {
     
-    
     enum AnimalImage {
         case cat,dog,random
     }
@@ -31,7 +30,7 @@ class ImageProvider {
         }
     }
     
-    func downloadImage(url: String, onCompletion completion: @escaping (UIImage)-> ()) {
+    private func downloadImage(url: String, onCompletion completion: @escaping (UIImage)-> ()) {
         guard let url = URL(string: url) else { return }
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, let image = UIImage(data: data) else { return }
@@ -41,12 +40,12 @@ class ImageProvider {
         }.resume()
     }
     
-    func catImage(onCompletion completion: @escaping (UIImage)-> ()) {
+    private func catImage(onCompletion completion: @escaping (UIImage)-> ()) {
         let catURL = "https://placekitten.com/200/\(Int.random(in: 300 ..< 400))"
         downloadImage(url: catURL, onCompletion: completion)
     }
     
-    func dogImage(onCompletion completion: @escaping (UIImage)-> ()) {
+    private func dogImage(onCompletion completion: @escaping (UIImage)-> ()) {
         URLSession.shared.dataTask(with: URL(string: "https://dog.ceo/api/breeds/image/random")!) { (data, response, error) in
             guard let data = data else { return }
             let decoder = JSONDecoder()
